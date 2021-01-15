@@ -207,7 +207,7 @@ punctuator:
 
 # 快捷键绑定
 key_binder:
-  import_preset: key_bindings
+  import_preset: default
 
 recognizer:
   import_preset: default

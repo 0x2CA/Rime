@@ -1,0 +1,15 @@
+# Rime table
+# coding: utf-8
+#@/db_name  custom_phrase.txt
+#@/db_type	tabledb
+#
+# 自定义短语
+#
+# 格式: 文字、编码、权重 (Tab隔离)
+
+⌘	cmd
+⌃	ctl
+⌥	opt
+⇧	shift
+GBK	gbk
+UTF-8	utfba

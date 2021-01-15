@@ -1,0 +1,48 @@
+patch:
+  app_options: # 应用单独设置
+    cmd.exe:
+      ascii_mode: true
+    conhost.exe:
+      ascii_mode: true
+
+  style:
+    display_tray_icon: true # 显示托盘图标
+    horizontal: true # 横排显示
+    font_face: "黑体" # 黑体、Microsoft YaHei UI、Segoe UI Emoji 字体
+    font_point: 13 # 字体大小
+    inline_preedit: true # 嵌入式候选窗单行显示
+    layout:
+      border: 0 # 边框
+      margin_x: 8 # 候选字左右边距
+      margin_y: 8 # 候选字上下边距
+      hilite_padding: 8 # 候选字背景色色块高度 若想候选字背景色块无边界填充候选框，仅需其高度和候选字上下边距一致即可
+      hilite_spacing: 3 # 序号和候选字之间的间隔
+      spacing: 10 # 作用不明
+      candidate_spacing: 12 # 候选字间隔
+      round_corner: 0 # 候选字背景色块圆角幅度
+    color_scheme: qbycs # 设置皮肤
+
+  # 皮肤
+  preset_color_schemes:
+    qbycs:
+      name: "qbycs"
+      author: "zz"
+      back_color: 0xEDEDED #候选框 背景色
+      border_color: 0xEDEDED #候选框 边框颜色
+      text_color: 0x000000 #已选择字 文字颜色
+      hilited_text_color: 0xFF0008 #已选择字右侧拼音 文字颜色
+      hilited_back_color: 0xEDEDED #已选择字右侧拼音 背景色
+      hilited_candidate_text_color: 0x000000 #候选字颜色
+      hilited_candidate_back_color: 0xFDD5B4 #候选字背景色
+      candidate_text_color: 0x545454 #未候选字颜
+    Micosoft:
+      name: "Micosoft"
+      author: "XNOM"
+      back_color: 0xffffff #候选框 背景色
+      border_color: 0xD77800 #候选框 边框颜色
+      text_color: 0x000000 #已选择字 文字颜色
+      hilited_text_color: 0x000000 #已选择字右侧拼音 文字颜色
+      hilited_back_color: 0xffffff #已选择字右侧拼音 背景色
+      hilited_candidate_text_color: 0xffffff #候选字颜色
+      hilited_candidate_back_color: 0xD77800 #候选字背景色
+      candidate_text_color: 0x000000 #未候选字颜色

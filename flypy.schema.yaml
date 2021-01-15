@@ -1,0 +1,215 @@
+# Rime schema
+# encoding: utf-8
+
+schema: # 方案
+  schema_id: flypy # 方案ID
+  name: 小鹤双拼 #方案名称
+  version: "2021.1.14" #方案版本
+  author:
+    - 贺子一 <2478557459@qq.com> #作者信息
+  description: Rime小鹤双拼方案。
+  dependencies:
+    - easy_en
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [中文, 西文]
+  - name: full_shape
+    states: [半角, 全角]
+  - name: simplification
+    reset: 1
+    states: [漢字, 汉字]
+  - name: ascii_punct
+    states: [。，, ．，]
+  - name: extended_charset #生僻字开关
+    states: ["通用", "增廣"]
+  - name: emoji_suggestion
+    reset: 1
+    states: ["🈚️️\uFE0E", "🈶️️\uFE0F"]
+  - options: ["utf8", "gbk", "gb2312"] # (※2)字符集选单
+    reset: 0 # 默认 UTF8
+    states: ["UTF-8", "GBK", "GB2312"]
+
+engine: # 輸入引擎設定，即掛接組件的「處方」
+  processors: # 一、這批組件處理各類按鍵消息
+    - ascii_composer # ※ 處理西文模式及中西文切換
+    - recognizer # ※ 與 matcher 搭配，處理符合特定規則的輸入碼，如網址、反查等
+    - key_binder # ※ 在特定條件下將按鍵綁定到其他按鍵，如重定義逗號、句號爲候選翻頁鍵
+    - speller # ※ 拼寫處理器，接受字符按鍵，編輯輸入碼
+    - punctuator # ※ 句讀處理器，將單個字符按鍵直接映射爲文字符號
+    - selector # ※ 選字處理器，處理數字選字鍵、上、下候選定位、換頁鍵
+    - navigator # ※ 處理輸入欄內的光標移動鍵
+    - express_editor # ※ 編輯器，處理空格、回車上屏、回退鍵等
+  segmentors: # 二、這批組件識別不同內容類型，將輸入碼分段
+    - ascii_segmentor # ※ 標識西文段落
+    - matcher # ※ 標識符合特定規則的段落，如網址、反查等
+    - abc_segmentor # ※ 標識常規的文字段落
+    - punct_segmentor # ※ 標識句讀段落
+    - fallback_segmentor # ※ 標識其他未標識段落
+  translators: # 三、這批組件翻譯特定類型的編碼段爲一組候選文字
+    # - echo_translator # ※ 沒有其他候選字時，回顯輸入碼
+    - punct_translator # ※ 轉換標點符號
+    - table_translator@custom_phrase # 自定义短语
+    - table_translator@english # 英语输入
+    - script_translator # ※ 腳本翻譯器，用於拼音等基於音節表的輸入方案
+    # - reverse_lookup_translator # ※ 反查翻譯器，用另一種編碼方案查碼
+  filters: # 四、這批組件過濾翻譯的結果
+    - cjk_minifier #过滤拼音输入法中罕用字
+    - simplifier@emoji_suggestion # 使用表情过滤
+    - simplifier # ※ 繁簡轉換
+    - uniquifier # ※ 過濾重複的候選字，有可能來自繁簡轉換
+
+speller: #拼音相关设置
+  alphabet: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " '"
+  algebra:
+    - erase/^xx$/ # 碼表中有幾個拼音不明的字，編碼成xx了，消滅他
+    # 模糊音定義
+    # 需要哪組就刪去行首的 # 號，單雙向任選
+    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
+    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
+
+    - derive/^n/l/ # n => l
+    - derive/^l/n/ # l => n
+
+    # 這兩組一般是單向的
+    #- derive/^r/l/                     # r => l
+
+    #- derive/^ren/yin/                 # ren => yin, reng => ying
+    #- derive/^r/y/                     # r => y
+
+    # 下面 hu <=> f 這組寫法複雜一些，分情況討論
+    #- derive/^hu$/fu/                  # hu => fu
+    #- derive/^hong$/feng/              # hong => feng
+    #- derive/^hu([in])$/fe$1/          # hui => fei, hun => fen
+    #- derive/^hu([ao])/f$1/            # hua => fa, ...
+
+    #- derive/^fu$/hu/                  # fu => hu
+    #- derive/^feng$/hong/              # feng => hong
+    #- derive/^fe([in])$/hu$1/          # fei => hui, fen => hun
+    #- derive/^f([ao])/hu$1/            # fa => hua, ...
+
+    # 韻母部份
+    #- derive/^([bpmf])eng$/$1ong/      # meng = mong, ...
+    - derive/([ei])n$/$1ng/ # en => eng, in => ing
+    - derive/([ei])ng$/$1n/ # eng => en, ing => in
+
+    - derive/^([jqxy])u$/$1v/
+    - derive/^([aoe])([ioun])$/$1$1$2/
+    - xform/^([aoe])(ng)?$/$1$1$2/
+    - xform/iu$/Q/ # 替換聲母鍵，用大寫以防與原有的字母混淆
+    - xform/(.)ei$/$1W/
+    - xform/uan$/R/
+    - xform/[uv]e$/T/
+    - xform/un$/Y/
+    - xform/^sh/U/
+    - xform/^ch/I/
+    - xform/^zh/V/
+    - xform/uo$/O/
+    - xform/ie$/P/
+    - xform/i?ong$/S/
+    - xform/ing$|uai$/K/
+    - xform/(.)ai$/$1D/
+    - xform/(.)en$/$1F/
+    - xform/(.)eng$/$1G/
+    - xform/[iu]ang$/L/
+    - xform/(.)ang$/$1H/
+    - xform/ian$/M/
+    - xform/(.)an$/$1J/
+    - xform/(.)ou$/$1Z/
+    - xform/[iu]a$/X/
+    - xform/iao$/N/
+    - xform/(.)ao$/$1C/
+    - xform/ui$/V/
+    - xform/in$/B/
+    - xlit/QWRTYUIOPSDFGHJKLZXCVBNM/qwrtyuiopsdfghjklzxcvbnm/ # 最後把雙拼碼全部變小寫
+    - abbrev/^(.).+$/$1/ # 简拼(首字母)
+
+translator:
+  dictionary: flypy # 方案使用的詞典
+  prism: flypy # 拼寫映射表
+  preedit_format:
+    {} # 输入双拼码的时候不转化为全拼码
+    # - xform/([bpmfdtnljqx])n/$1iao/
+    # - xform/(\w)g/$1eng/
+    # - xform/(\w)q/$1iu/
+    # - xform/(\w)w/$1ei/
+    # - xform/([dtnlgkhjqxyvuirzcs])r/$1uan/
+    # - xform/(\w)t/$1ve/
+    # - xform/(\w)y/$1un/
+    # - xform/([dtnlgkhvuirzcs])o/$1uo/
+    # - xform/(\w)p/$1ie/
+    # - xform/([jqx])s/$1iong/
+    # - xform/(\w)s/$1ong/
+    # - xform/(\w)d/$1ai/
+    # - xform/(\w)f/$1en/
+    # - xform/(\w)h/$1ang/
+    # - xform/(\w)j/$1an/
+    # - xform/([gkhvuirzcs])k/$1uai/
+    # - xform/(\w)k/$1ing/
+    # - xform/([jqxnl])l/$1iang/
+    # - xform/(\w)l/$1uang/
+    # - xform/(\w)z/$1ou/
+    # - xform/([gkhvuirzcs])x/$1ua/
+    # - xform/(\w)x/$1ia/
+    # - xform/(\w)c/$1ao/
+    # - xform/([dtgkhvuirzcs])v/$1ui/
+    # - xform/(\w)b/$1in/
+    # - xform/(\w)m/$1ian/
+    # - xform/([aoe])\1(\w)/$1$2/
+    # - "xform/(^|[ '])v/$1zh/"
+    # - "xform/(^|[ '])i/$1ch/"
+    # - "xform/(^|[ '])u/$1sh/"
+    # - xform/([jqxy])v/$1u/
+    # - xform/([nl])v/$1ü/
+  enable_user_dict: true # 用户词典、词序自动调频
+  enable_encoder: true # 自动造词
+  enable_sentence: true # 自动造句
+  enable_completion: false # 自动补全
+  enable_charset_filter: true #启用罕见字過濾
+  enable_correction: true # 拼写纠错
+
+# 表情输入
+emoji_suggestion:
+  opencc_config: emoji.json
+  option_name: emoji_suggestion
+  tips: all
+
+# 自定义短语
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+
+# english输入法
+english:
+  dictionary: easy_en
+  spelling_hints: 9
+  enable_completion: true # 是否启用英文输入联想补全
+  enable_user_dict: true # 用户词典、词序自动调频
+  enable_encoder: true # 自动造词
+  enable_sentence: true # 自动造句
+  initial_quality: -2 # 调整英文候选词的位置，如 -3 会更靠后
+
+# 英文输入
+ascii_composer:
+  switch_key:
+    Shift_L: commit_code # shift直接上屏，并且保留英文输入状态
+    Shift_R: inline_ascii #插入字符，就是已输入的字符为上屏前，按此键后输入法转为英文
+
+# 特殊符号
+punctuator:
+  import_preset: symbols
+
+# 快捷键绑定
+key_binder:
+  import_preset: key_bindings
+
+recognizer:
+  import_preset: default
+  patterns:
+    punct: "^/([0-9]0?|[A-Za-z]+)$" # 输入符号

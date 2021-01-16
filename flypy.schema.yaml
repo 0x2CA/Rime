@@ -50,6 +50,8 @@ engine: # 輸入引擎設定，即掛接組件的「處方」
   translators: # 三、這批組件翻譯特定類型的編碼段爲一組候選文字
     # - echo_translator # ※ 沒有其他候選字時，回顯輸入碼
     - punct_translator # ※ 轉換標點符號
+    - lua_translator@date_translator # 动态日期输入
+    - lua_translator@time_translator # 动态时间输入
     - table_translator@custom_phrase # 自定义短语
     - table_translator@english # 英语输入
     - script_translator # ※ 腳本翻譯器，用於拼音等基於音節表的輸入方案

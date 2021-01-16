@@ -16,7 +16,6 @@ import_tables:
   - THUOCL_lishimingren
   - THUOCL_medical
   - THUOCL_poem
-  - pinyin_simp # 拼音词库
   - zhwiki # 中文维基词库
   - guangzhou # 广州地点词库
   - buzzword # 网络流行新词词库

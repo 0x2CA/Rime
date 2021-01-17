@@ -171,6 +171,8 @@ translator:
   enable_completion: false # 自动补全
   enable_charset_filter: true #启用罕见字過濾
   enable_correction: false # 拼写纠错
+  encode_commit_history: false  # 对已上屏的内容自动造词
+  max_phrase_length: 7 # 自动造词的最长字数
 
 # 表情输入
 emoji_suggestion:

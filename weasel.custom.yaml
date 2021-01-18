@@ -20,7 +20,7 @@ patch:
       spacing: 10 # 作用不明
       candidate_spacing: 12 # 候选字间隔
       round_corner: 0 # 候选字背景色块圆角幅度
-    color_scheme: qbycs # 设置皮肤
+    color_scheme: Micosoft # 设置皮肤
 
   # 皮肤
   preset_color_schemes:

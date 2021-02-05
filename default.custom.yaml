@@ -2,4 +2,5 @@ patch:
   menu:
     page_size: 6
   schema_list:
-    - {schema: flypy}
+    - { schema: flypy }
+    - { schema: easy_en }

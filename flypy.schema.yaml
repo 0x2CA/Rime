@@ -19,17 +19,20 @@ switches:
     states: [半角, 全角]
   - name: simplification
     reset: 1
-    states: [漢字, 汉字]
+    # states: [漢字, 汉字]
   - name: ascii_punct
     states: [。，, ．，]
   - name: extended_charset #生僻字开关
-    states: ["通用", "增廣"]
-  - name: emoji_suggestion
+    # states: ["通用", "增廣"]
+  - name: emoji_suggestion # emoji
     reset: 1
-    states: ["🈚️️\uFE0E", "🈶️️\uFE0F"]
+    # states: ["🈚️️\uFE0E", "🈶️️\uFE0F"]
+  - name: kaomoji_suggestion # 颜文字
+    reset: 1
+    # states: ["开心", "(*^▽^*)"]
   - options: ["utf8", "gbk", "gb2312"] # (※2)字符集选单
     reset: 0 # 默认 UTF8
-    states: ["UTF-8", "GBK", "GB2312"]
+    # states: ["UTF-8", "GBK", "GB2312"]
 
 engine: # 輸入引擎設定，即掛接組件的「處方」
   processors: # 一、這批組件處理各類按鍵消息
@@ -60,9 +63,10 @@ engine: # 輸入引擎設定，即掛接組件的「處方」
     # - reverse_lookup_translator # ※ 反查翻譯器，用另一種編碼方案查碼
   filters: # 四、這批組件過濾翻譯的結果
     - cjk_minifier #过滤拼音输入法中罕用字
-    - simplifier@emoji_suggestion # 使用表情过滤
     - simplifier # ※ 繁簡轉換
     - uniquifier # ※ 過濾重複的候選字，有可能來自繁簡轉換
+    - simplifier@emoji_suggestion # 使用表情过滤
+    - simplifier@kaomoji_suggestion # 使用颜文字过滤
     - single_char_filter
 
 speller: #拼音相关设置
@@ -181,6 +185,12 @@ translator:
 emoji_suggestion:
   opencc_config: emoji.json
   option_name: emoji_suggestion
+  tips: all
+
+# 颜文字
+kaomoji_suggestion:
+  opencc_config: kaomoji.json
+  option_name: kaomoji_suggestion
   tips: all
 
 # 自定义短语

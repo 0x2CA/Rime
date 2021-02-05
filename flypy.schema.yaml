@@ -64,10 +64,10 @@ engine: # 輸入引擎設定，即掛接組件的「處方」
   filters: # 四、這批組件過濾翻譯的結果
     - cjk_minifier #过滤拼音输入法中罕用字
     - simplifier # ※ 繁簡轉換
-    - uniquifier # ※ 過濾重複的候選字，有可能來自繁簡轉換
     - simplifier@emoji_suggestion # 使用表情过滤
     - simplifier@kaomoji_suggestion # 使用颜文字过滤
-    - single_char_filter
+    - uniquifier # ※ 過濾重複的候選字，有可能來自繁簡轉換
+    # - single_char_filter
 
 speller: #拼音相关设置
   alphabet: zyxwvutsrqponmlkjihgfedcba

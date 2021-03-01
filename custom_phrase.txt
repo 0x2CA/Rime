@@ -11,5 +11,14 @@
 ⌃	ctl
 ⌥	opt
 ⇧	shift
+⇥	tab
+⇪	caps
+⏎	return
+⏎	enter
+␣	space
+⌫	del
+⌫	backspace
+⎋	esc
+⏏	eject
 GBK	gbk
 UTF-8	utfba

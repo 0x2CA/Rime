@@ -3,20 +3,37 @@ name: flypy
 version: "1.0.0"
 sort: by_weight
 import_tables:
-  - pypinyin # 单字字库，包含所有字的拼音、字频
-  - pypinyin_phrase #词组词库，包含所有基本词汇的拼音、词频
-  - THUOCL_animal # 清华大学开源词库
-  - THUOCL_caijing
-  - THUOCL_car
-  - THUOCL_chengyu
-  - THUOCL_diming
-  - THUOCL_food
-  - THUOCL_IT
-  - THUOCL_law
-  - THUOCL_lishimingren
-  - THUOCL_medical
-  - THUOCL_poem
-  - zhwiki # 中文维基词库
-  - guangzhou # 广州地点词库
-  - buzzword # 网络流行新词词库
-  - sougou # 搜狗词库
+  # 基础库，包含所有字、词的拼音、字频
+  - dicts/base/character # 单字
+  - dicts/base/phrase # 词组
+
+  # 搜狗词库
+  - dicts/sougou/standard # 搜狗标准
+  # - dicts/sougou/chengshixinxi # 城市信息
+  # - dicts/sougou/zirankexue # 自然科学
+  # - dicts/sougou/shehuikexue # 社会科学
+  # - dicts/sougou/gongchengyingyong # 工程应用
+  # - dicts/sougou/nonglinyuchu # 农林渔畜
+  # - dicts/sougou/yixueyiyao # 医学医药
+  # - dicts/sougou/dianziyouxi # 电子游戏
+  # - dicts/sougou/yishusheji # 艺术设计
+  # - dicts/sougou/shenghuobaike # 生活百科
+  # - dicts/sougou/yundongxiuxian # 运动休闲
+  # - dicts/sougou/renwenkexue # 人文科学
+  # - dicts/sougou/yulexiuxian # 娱乐休闲
+
+  # 清华大学开源词库
+  - dicts/thuocl/animal # 动物
+  - dicts/thuocl/caijing # 财经
+  - dicts/thuocl/car # 汽车
+  - dicts/thuocl/chengyu # 成语
+  - dicts/thuocl/diming # 地名
+  - dicts/thuocl/food # 食物
+  - dicts/thuocl/it # 计算机
+  - dicts/thuocl/law # 法律
+  - dicts/thuocl/lishimingren # 历史名人
+  - dicts/thuocl/medical # 医学
+  - dicts/thuocl/poem # 诗词
+
+  # 中文维基词库
+  - dicts/zhwiki

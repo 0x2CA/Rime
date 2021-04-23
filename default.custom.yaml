@@ -3,3 +3,5 @@ patch:
     page_size: 6
   schema_list:
     - { schema: flypy }
+  switcher:
+    hotkeys: ~

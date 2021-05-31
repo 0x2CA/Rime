@@ -13,7 +13,7 @@ schema:
     五筆畫
     h,s,p,n,z 代表橫、豎、撇、捺、折
   dependencies:
-    - luna_pinyin
+    - flypy
 
 switches:
   - name: ascii_mode
@@ -65,7 +65,7 @@ abc_segmentor:
     - reverse_lookup
 
 reverse_lookup:
-  dictionary: luna_pinyin
+  dictionary: flypy
   prefix: "`"
   suffix: "'"
   tips: 〔拼音〕

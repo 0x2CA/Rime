@@ -72,6 +72,7 @@ engine: # 輸入引擎設定，即掛接組件的「處方」
     - simplifier@emoji_suggestion # 使用表情过滤
     - simplifier@kaomoji_suggestion # 使用颜文字过滤
     - uniquifier # ※ 過濾重複的候選字，有可能來自繁簡轉換
+    # - reverse_lookup_filter@reverse_lookup # 提示反查的笔画
     # - single_char_filter
 
 speller: #拼音相关设置

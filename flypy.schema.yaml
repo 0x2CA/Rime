@@ -10,6 +10,7 @@ schema: # 方案
   description: Rime小鹤双拼方案。
   dependencies:
     - english
+    - stroke
 
 switches:
   - name: ascii_mode
@@ -63,7 +64,7 @@ engine: # 輸入引擎設定，即掛接組件的「處方」
     - table_translator@custom_phrase # 自定义短语
     - table_translator@english # 英语输入
     - script_translator # ※ 腳本翻譯器，用於拼音等基於音節表的輸入方案
-    # - reverse_lookup_translator # ※ 反查翻譯器，用另一種編碼方案查碼
+    - reverse_lookup_translator # ※ 反查翻譯器，用另一種編碼方案查碼
   filters: # 四、這批組件過濾翻譯的結果
     - cjk_minifier #过滤拼音输入法中罕用字
     - simplifier # ※ 繁簡轉換
@@ -228,6 +229,18 @@ ascii_composer:
     Shift_L: commit_code # shift直接上屏，并且保留英文输入状态
     Shift_R: inline_ascii #插入字符，就是已输入的字符为上屏前，按此键后输入法转为英文
 
+# 反查笔画
+reverse_lookup:
+  dictionary: stroke
+  enable_completion: true
+  prefix: "`"
+  suffix: "'"
+  tips: 〔筆畫〕
+  preedit_format:
+    - xlit/hspnz/一丨丿丶乙/
+  comment_format:
+    - xform/([nl])v/$1ü/
+
 # 特殊符号
 punctuator:
   import_preset: symbols
@@ -240,4 +253,4 @@ recognizer:
   import_preset: default
   patterns:
     punct: "^/([0-9]0?|[A-Za-z]+)$" # 输入符号
-    # reverse_lookup: "`[a-z]*'?$" # 反查
+    reverse_lookup: "`[a-z]*'?$" # 反查

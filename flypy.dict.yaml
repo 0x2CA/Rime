@@ -4,11 +4,12 @@ version: "1.0.0"
 sort: by_weight
 import_tables:
   # 基础库，包含所有字、词的拼音、字频
-  - dicts/base/character # 单字
-  - dicts/base/phrase # 词组
+  # - dicts/base/character # 单字
+  # - dicts/base/phrase # 词组
+  - dicts/base/general # 《通用规范汉字表》8105字
 
   # 搜狗词库
-  # - dicts/sougou/standard # 搜狗标准
+  - dicts/sougou/standard # 搜狗标准
   - dicts/sougou/chengshixinxi # 城市信息
   - dicts/sougou/zirankexue # 自然科学
   - dicts/sougou/shehuikexue # 社会科学

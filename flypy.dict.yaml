@@ -7,9 +7,11 @@ import_tables:
   - dicts/base/character # 单字
   - dicts/base/phrase # 词组
   - dicts/base/general # 《通用规范汉字表》8105字
+  - dicts/base/corpus # 现代汉语语料库
 
   # 搜狗词库
   - dicts/sougou/standard # 搜狗标准
+  - dicts/sougou/w # 互联网词库
   # - dicts/sougou/chengshixinxi # 城市信息
   # - dicts/sougou/zirankexue # 自然科学
   # - dicts/sougou/shehuikexue # 社会科学
@@ -37,4 +39,4 @@ import_tables:
   - dicts/thuocl/poem # 诗词
 
   # 中文维基词库
-  # - dicts/zhwiki
+  - dicts/zhwiki
